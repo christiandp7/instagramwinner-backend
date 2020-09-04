@@ -1,0 +1,21 @@
+{
+  "name": "instagramWinner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index",
+    "get-post-comments": "node src/scraper/getPostComments.js",
+    "get-followers": "node src/scraper/getFollowers.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.3",
+    "puppeteer": "^5.2.1"
+  }
+}
