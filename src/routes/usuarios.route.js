@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 
 // Get All Usuarios with Pagination
-router.get('/users', async (req, res) => {
+router.get('/users', (req, res) => {
 
   let from = req.query.from || 0;
   from = Number(from);
@@ -28,7 +28,7 @@ router.get('/users', async (req, res) => {
   //uba = Boolean(uba);
 
   
-  await User.find({ usedByChristian: ubc, usedByAndrea: uba })
+  User.find({ usedByChristian: ubc, usedByAndrea: uba })
       .skip(from)
       .limit(limit)
       .exec()
@@ -50,7 +50,7 @@ router.get('/users', async (req, res) => {
 })
 
 // Bulk users Add by HTML
-router.post('/users', async (req, res) => {
+router.post('/users', (req, res) => {
 
   let body = req.body;
   /*let body = [
@@ -77,7 +77,7 @@ router.post('/users', async (req, res) => {
     }
   ]*/
 
-  await User.collection.insertMany(body)
+  User.collection.insertMany(body)
       .then(newUsers => {
         res.json({
           ok: true,
