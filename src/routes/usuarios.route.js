@@ -52,7 +52,7 @@ router.get('/users', (req, res) => {
 // Bulk users Add by HTML
 router.post('/users', (req, res) => {
 
-  let body = req.body;
+  let allUsers = req.body.usuarios;
   /*let body = [
     {
       username: 'username_4',
@@ -77,7 +77,7 @@ router.post('/users', (req, res) => {
     }
   ]*/
 
-  User.collection.insertMany(body)
+  User.collection.insertMany(allUsers)
       .then(newUsers => {
         res.json({
           ok: true,
