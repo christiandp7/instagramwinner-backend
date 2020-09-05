@@ -77,7 +77,7 @@ router.post('/users', (req, res) => {
     }
   ]*/
 
-  User.collection.insertMany(allUsers)
+  User.collection.insertMany(allUsers, { ordered: false })
       .then(newUsers => {
         res.json({
           ok: true,
