@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const boolParser = require('express-query-boolean')
 const mongoose = require('mongoose');
 const app = express();
@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(boolParser());
 
-app.use(morgan('dev'))
+//app.use(morgan('dev'))
 
 // Routes
 app.use(require('./routes/usuarios.route'))
