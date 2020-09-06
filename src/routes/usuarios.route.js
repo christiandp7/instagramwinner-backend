@@ -77,6 +77,27 @@ router.get('/users/username', (req, res) => {
 })
 
 
+// Get All Usuarios with Pagination
+router.get('/users/stats', (req, res) => {
+
+  try {
+    User.countDocuments({ }, (err, total) => {
+      User.countDocuments({ usedByChristian: true }, (err, ubc) => {
+        User.countDocuments({ usedByAndrea: true }, (err, uba) => {
+          res.json({
+            ok: true,
+            total,
+            ubc,
+            uba
+          })
+        })
+      })
+    })
+  } catch (err) {
+    console.log(err)
+  }
+
+})
 
 // Bulk users Add by HTML
 router.post('/users', (req, res) => {
