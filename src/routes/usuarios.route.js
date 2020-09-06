@@ -45,7 +45,7 @@ router.get('/users', (req, res) => {
 })
 
 
-router.get('/users/username', (req, res) => {
+router.get('/users/username/:owner', (req, res) => {
 
   let from = req.query.from || 0;
   from = Number(from);
@@ -53,13 +53,8 @@ router.get('/users/username', (req, res) => {
   let limit = req.query.limit || 3;
   limit = Number(limit);
 
-  let ubc = req.query.usedByChristian || false;
-  //ubc = Boolean(ubc);
-  let uba = req.query.usedByAndrea || false;
-  //uba = Boolean(uba);
-
-  
-  User.find({ usedByChristian: ubc, usedByAndrea: uba }, 'username')
+  if(req.params.owner === 'christian') {
+    User.find({ usedByChristian: false }, 'username')
       .skip(from)
       .limit(limit)
       .exec()
@@ -74,6 +69,31 @@ router.get('/users/username', (req, res) => {
           error: err
         })
       })
+  } 
+  if (req.params.owner === 'andrea') {
+    User.find({ usedByAndrea: false }, 'username')
+      .skip(from)
+      .limit(limit)
+      .exec()
+      .then(users => {
+        res.json({
+          ok: true,
+          usuarios: users
+        })
+      }).catch(err => {
+        return res.status(400).json({
+          ok: false,
+          error: err
+        })
+      })
+  } 
+  
+  return res.status(400).json({
+    ok: false,
+    error: 'No match owner'
+  })
+  
+  
 })
 
 
