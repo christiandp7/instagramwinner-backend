@@ -131,7 +131,7 @@ router.post('/user/test', (req, res) => {
   })
 })
 
-// bulk update
+// bulk update Christian
 router.put('/users/used/christian', (req, res) => {
 
   let ides = req.body.ides;
@@ -143,6 +143,33 @@ router.put('/users/used/christian', (req, res) => {
   ]*/
 
   User.updateMany({ $or: ides }, { $set: { usedByChristian: true }})
+    .then(updatedUsers => {
+      res.json({
+        ok: true,
+        updatedUsers
+      })
+    }).catch(err => {
+      return res.status(400).json({
+        ok: false,
+        error: err
+      })
+    })
+
+  
+})
+
+// bulk update Andrea
+router.put('/users/used/andrea', (req, res) => {
+
+  let ides = req.body.ides;
+
+  /*let ides = [
+    { _id: '5f53f33114ced7001704bc3f' },
+    { _id: '5f540a9014ced7001704bc5a' },
+    { _id: '5f540a9014ced7001704bc5b' }
+  ]*/
+
+  User.updateMany({ $or: ides }, { $set: { usedByAndrea: true }})
     .then(updatedUsers => {
       res.json({
         ok: true,
