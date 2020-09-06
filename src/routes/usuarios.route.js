@@ -22,13 +22,8 @@ router.get('/users', (req, res) => {
   let limit = req.query.limit || 10;
   limit = Number(limit);
 
-  let ubc = req.query.usedByChristian || false;
-  //ubc = Boolean(ubc);
-  let uba = req.query.usedByAndrea || false;
-  //uba = Boolean(uba);
-
   
-  User.find({ usedByChristian: ubc, usedByAndrea: uba })
+  User.find({ })
       .skip(from)
       .limit(limit)
       .exec()
@@ -136,23 +131,31 @@ router.post('/user/test', (req, res) => {
   })
 })
 
-// Delete Users By Id
-router.delete('/users/:id', (req, res) => {
+// bulk update
+router.put('/users/used/christian', (req, res) => {
 
-  let id = req.params.id;
-  
-  User.findByIdAndRemove(id)
-      .then(deletedUser => {
-        res.json({
-          ok: true,
-          usuario: deletedUser
-        })
-      }).catch(err => {
-        return res.status(400).json({
-          ok: false,
-          error: err
-        })
+  let ides = req.body.ides;
+
+  /*let ides = [
+    { _id: '5f53f33114ced7001704bc3f' },
+    { _id: '5f540a9014ced7001704bc5a' },
+    { _id: '5f540a9014ced7001704bc5b' }
+  ]*/
+
+  User.updateMany({ $or: ides }, { $set: { usedByChristian: true }})
+    .then(updatedUsers => {
+      res.json({
+        ok: true,
+        updatedUsers
       })
+    }).catch(err => {
+      return res.status(400).json({
+        ok: false,
+        error: err
+      })
+    })
+
+  
 })
 
 
