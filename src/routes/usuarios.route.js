@@ -207,6 +207,25 @@ router.put('/users/used/andrea', (req, res) => {
 })
 
 
+app.delete('/users/:id', (req, res) => {
+
+  let id = req.params.id;
+  
+  User.findByIdAndRemove(id)
+    .then(deletedUser => {
+      res.json({
+        ok: true,
+        deletedUser
+      })
+    })
+    .catch(err => {
+      return res.status(400).json({
+        ok: false,
+        error: err
+      })
+    })
+
+});
 
 
 module.exports = router;
