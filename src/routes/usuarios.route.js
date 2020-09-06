@@ -49,6 +49,40 @@ router.get('/users', (req, res) => {
       })
 })
 
+
+router.get('/users/username', (req, res) => {
+
+  let from = req.query.from || 0;
+  from = Number(from);
+
+  let limit = req.query.limit || 3;
+  limit = Number(limit);
+
+  let ubc = req.query.usedByChristian || false;
+  //ubc = Boolean(ubc);
+  let uba = req.query.usedByAndrea || false;
+  //uba = Boolean(uba);
+
+  
+  User.find({ usedByChristian: ubc, usedByAndrea: uba }, 'username')
+      .skip(from)
+      .limit(limit)
+      .exec()
+      .then(users => {
+        res.json({
+          ok: true,
+          usuarios: users
+        })
+      }).catch(err => {
+        return res.status(400).json({
+          ok: false,
+          error: err
+        })
+      })
+})
+
+
+
 // Bulk users Add by HTML
 router.post('/users', (req, res) => {
 
@@ -77,7 +111,8 @@ router.post('/users', (req, res) => {
     }
   ]*/
 
-  User.collection.insertMany(allUsers, { ordered: false })
+  //User.collection.insertMany(allUsers, { ordered: false })
+  User.collection.insertMany(allUsers)
       .then(newUsers => {
         res.json({
           ok: true,
