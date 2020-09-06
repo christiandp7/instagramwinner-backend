@@ -207,10 +207,10 @@ router.put('/users/used/andrea', (req, res) => {
 })
 
 
-app.delete('/users/:id', (req, res) => {
+router.delete('/users/:id', (req, res) => {
 
   let id = req.params.id;
-  
+
   User.findByIdAndRemove(id)
     .then(deletedUser => {
       res.json({
